@@ -1,10 +1,12 @@
-import express, { response } from "express";
+import express from "express";
+import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 app.post("/usuarios", async (require, response) => {
   await prisma.user.create({
@@ -45,8 +47,9 @@ app.delete("/usuarios/:id", async (require, response) => {
   });
   response.status(200).json({ message: "Usuário deletado com suceso!" });
 });
+
 let port = "3000";
 
 app.listen(port, () => {
-console.log(`Servidor rodando na porta ${port}!!`);
+  console.log(`Servidor rodando na porta ${port}!!`);
 });
